@@ -60,26 +60,28 @@ public class HuffProcessor {
 	 */
 	public void decompress(BitInputStream in, BitOutputStream out){
 
-		while (true){
-			int val = in.readBits(BITS_PER_WORD);
-//			if (val == -1) break;
-			if (val != HUFF_TREE) { 
-				throw new HuffException("illegal header starts with " +val); 
-			}
-			HuffNode root = readTreeHeader(in); 
-			readCompressedBits(root,in,out); 
-//			
-//			
-//			out.writeBits(BITS_PER_WORD, val);
-//		
+		int val = in.readBits(BITS_PER_WORD);
+//		if (val == -1) break;
+		if (val != HUFF_TREE) { 
+			throw new HuffException("illegal header starts with " +val); 
 		}
+		HuffNode root = readTreeHeader(in); 
+		readCompressedBits(root,in,out); 
+//			
+//		out.writeBits(BITS_PER_WORD, val);
+//			
 		out.close();
+	}
+
+	private void readCompressedBits(HuffNode root, BitInputStream in, BitOutputStream out) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	private HuffNode readTreeHeader(BitInputStream in) {
 		// TODO Auto-generated method stub
 		
-		int v = in.readBits(BITS_PER_WORD + 1); 
+		int v = in.readBits(1); 
 		if(v == -1) throw new HuffException("Illegal number" + v); 
 		if(v == 0) { 
 			HuffNode left = readTreeHeader(in);
@@ -87,10 +89,10 @@ public class HuffProcessor {
 			return new HuffNode(0,0,left,right); 
 		}
 		else { 
-			value 
+			int value = in.readBits(BITS_PER_WORD + 1);
+			return new HuffNode(value, 0, null, null); 
+			
 		}
 		
-		
-		return null;
 	}
 }
