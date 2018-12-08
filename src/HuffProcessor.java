@@ -62,9 +62,35 @@ public class HuffProcessor {
 
 		while (true){
 			int val = in.readBits(BITS_PER_WORD);
-			if (val == -1) break;
-			out.writeBits(BITS_PER_WORD, val);
+//			if (val == -1) break;
+			if (val != HUFF_TREE) { 
+				throw new HuffException("illegal header starts with " +val); 
+			}
+			HuffNode root = readTreeHeader(in); 
+			readCompressedBits(root,in,out); 
+//			
+//			
+//			out.writeBits(BITS_PER_WORD, val);
+//		
 		}
 		out.close();
+	}
+
+	private HuffNode readTreeHeader(BitInputStream in) {
+		// TODO Auto-generated method stub
+		
+		int v = in.readBits(BITS_PER_WORD + 1); 
+		if(v == -1) throw new HuffException("Illegal number" + v); 
+		if(v == 0) { 
+			HuffNode left = readTreeHeader(in);
+			HuffNode right = readTreeHeader(in); 
+			return new HuffNode(0,0,left,right); 
+		}
+		else { 
+			value 
+		}
+		
+		
+		return null;
 	}
 }
