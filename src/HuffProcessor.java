@@ -81,7 +81,7 @@ public class HuffProcessor {
 	private HuffNode readTreeHeader(BitInputStream in) {
 		// TODO Auto-generated method stub
 		
-		int v = in.readBits(1); 
+		int v = in.read(); 
 		if(v == -1) throw new HuffException("Illegal number" + v); 
 		if(v == 0) { 
 			HuffNode left = readTreeHeader(in);
