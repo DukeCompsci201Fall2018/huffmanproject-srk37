@@ -57,7 +57,8 @@ public class HuffProcessor {
 	}
 	private void writeCompressedBits(String[] codings, BitInputStream in, BitOutputStream out) {
 		// TODO Auto-generated method stub
-		for(String s : codings) { 
+		for(int i = 0 ; i < codings.length; i++) {
+			String s = codings[i]; 
 			out.writeBits(s.length(), Integer.parseInt(s, 2));
 		}
 		
